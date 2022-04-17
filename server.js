@@ -60,6 +60,19 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || 3000);
 
-var server = app.listen(app.get('port'), function () {
+/*var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
+});*/
+
+const http = require('http')
+const server = http.createServer(app)
+
+// Handle a socket connection from web client
+var socketio = require('socket.io')
+const io = socketio(server)
+
+server.listen(app.get('port'), () => debug('Express server listening on port ' + server.address().port));
+
+io.on('connection', socket => {
+    console.log('New web socket connection');
 });
