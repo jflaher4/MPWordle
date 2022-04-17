@@ -29,11 +29,11 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="public\javascripts\index.js">
+    <Content Include="public\javascripts\lobby.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="server.js" />
-    <Content Include="controllers\index.js">
+    <Content Include="controllers\index_controller.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="routes\index.js" />
@@ -41,6 +41,9 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
+    <Content Include="views\lobby.pug">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />

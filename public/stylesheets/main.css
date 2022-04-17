@@ -1,4 +1,23 @@
 h1 {
     font-weight: bold;
     font-size: 48px;
+    font-family: Arial;
+    margin: 10px;
+    margin-bottom: 0px;
 }
+
+h2 {
+    font-family: Brush Script MT, Brush Script Std, cursive;
+    margin: 10px;
+    font-weight: lighter;
+    font-size: 40px;
+    margin-top: 0px; 
+}
+
+.header {
+    color: black;
+    width: 100%;
+    text-align: center;
+    border-bottom: black solid 1px;
+}
+

@@ -2,7 +2,15 @@ extends layout
  
 block content
   script(src='/javascripts/index.js')
-  img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Notre_Dame_Fighting_Irish_logo.svg/400px-Notre_Dame_Fighting_Irish_logo.svg.png')
-  h2 Multiplayer
-  h1 Wordle
   p Welcome to #{title}
+  form(action='' method='POST')
+      label(for='playername') Username:
+      br
+      input#lname(type='text' name='username' value='RandomAnimal')
+      br
+      br
+      input(type='submit' value='Enter Game Lobby')
+  if errors
+   ul
+    for error in errors
+     li!= error.msg

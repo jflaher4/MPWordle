@@ -5,4 +5,10 @@ html
     link(rel='stylesheet', href='/stylesheets/main.css')
     script(src='/socket.io/socket.io.js')
   body
+    .header
+      h1#title
+        | WOR
+        img#logo(src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Notre_Dame_Fighting_Irish_logo.svg/400px-Notre_Dame_Fighting_Irish_logo.svg.png' width='45px' height='37px')
+        | LE
+      h2#subtitle Multiplayer Version
     block content
