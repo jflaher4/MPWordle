@@ -1,0 +1,3 @@
+C:\Users\Owner\Documents\Jack\Coding\MPWordle\obj\Debug\MPWordle.njsproj.AssemblyReference.cache
+C:\Users\Owner\Documents\Jack\Coding\MPWordle\obj\Debug\MPWordle.njsproj.CoreCompileInputs.cache
+C:\Users\Owner\Documents\Jack\Coding\MPWordle\bin\Microsoft.NodejsTools.WebRole.dll
