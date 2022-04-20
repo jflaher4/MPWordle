@@ -29,6 +29,8 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="data\animals.txt" />
+    <Content Include="data\english-adjectives.txt" />
     <Content Include="public\javascripts\lobby.js">
       <SubType>Code</SubType>
     </Content>
@@ -50,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controllers\" />
+    <Folder Include="data\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

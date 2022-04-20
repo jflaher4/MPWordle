@@ -1,7 +1,19 @@
 const { body, validationResult } = require("express-validator");
 
+function getRandomUserName() {
+    const fs = require('fs');
+
+    const animals = fs.readFileSync('data/animals.txt', 'utf-8').split(/\r?\n/);
+    const animal = animals[Math.floor(Math.random() * animals.length)];
+
+    const adjectives = fs.readFileSync('data/english-adjectives.txt', 'utf-8').split(/\r?\n/);
+    const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+
+    return adjective + animal;
+}
+
 exports.username_get = function (req, res, next) {
-    res.render('index', { title: 'Multiplayer WorNDle' });
+    res.render('index', { title: 'Multiplayer WorNDle', randomUserName: getRandomUserName() });
 }
 
 exports.username_post = [
@@ -20,7 +32,7 @@ exports.username_post = [
 
         if (!errors.isEmpty()) {
             // There are errors. Render the form again with sanitized values/error messages.
-            res.render('index', { title: 'Multiplayer WorNDle', errors: errors.array() });
+            res.render('index', { title: 'Multiplayer WorNDle', randomUserName: getRandomUserName() , errors: errors.array() });
             return;
         }
         res.render('lobby', { title: 'Game Lobby' , username: username});

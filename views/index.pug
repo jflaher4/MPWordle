@@ -4,12 +4,13 @@ block content
   script(src='/javascripts/index.js')
   p Welcome to #{title}
   form(action='' method='POST')
-      label(for='playername') Username:
+      label(for='username') Username:
       br
-      input#lname(type='text' name='username' value='RandomAnimal')
+      input#lname(type='text' name='username' value= randomUserName)
       br
       br
       input(type='submit' value='Enter Game Lobby')
+
   if errors
    ul
     for error in errors
