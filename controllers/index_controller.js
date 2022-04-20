@@ -9,7 +9,7 @@ function getRandomUserName() {
     const adjectives = fs.readFileSync('data/english-adjectives.txt', 'utf-8').split(/\r?\n/);
     const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
 
-    return adjective + animal;
+    return adjective + ' ' + animal;
 }
 
 exports.username_get = function (req, res, next) {
@@ -20,7 +20,7 @@ exports.username_post = [
 
     // Validate and sanitize the name field.
     body('username').trim().isLength({ min: 1 }).escape().withMessage('Username required!')
-        .isAlphanumeric().withMessage('Username has non-alphanumeric characters.'),
+        .matches(/^[a-zA-Z0-9 ]+$/i).withMessage('Username has non-alphanumeric characters.'),
     // Process request after validation and sanitization.
     (req, res, next) => {
 

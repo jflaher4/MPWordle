@@ -7,7 +7,7 @@
   },
   "description": "MPWordle",
   "author": {
-    "name": ""
+    "name": "John Flaherty and Sam Sikkink"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
