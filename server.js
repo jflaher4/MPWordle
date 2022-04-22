@@ -75,4 +75,7 @@ io.on('connection', socket => {
     socket.on('chat message', msg => {
         io.emit('chat message', msg);
     });
+    socket.on('disconnect', msg => {
+        io.emit('chat message', username + ' left the lobby');
+    });
 });
