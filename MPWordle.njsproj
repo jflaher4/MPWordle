@@ -29,16 +29,19 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="controllers\lobby_controller.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="data\animals.txt" />
     <Content Include="data\english-adjectives.txt" />
     <Content Include="public\javascripts\lobby.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="server.js" />
-    <Content Include="controllers\index_controller.js">
+    <Content Include="controllers\landing_controller.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="routes\index.js" />
+    <Content Include="routes\landing.js" />
     <Content Include="routes\users.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
@@ -46,7 +49,7 @@
     <Content Include="views\lobby.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\index.pug" />
+    <Content Include="views\landing.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
   </ItemGroup>
