@@ -35,6 +35,6 @@ exports.username_post = [
             res.render('landing', { title: 'Multiplayer WorNDle', randomUserName: getRandomUserName() , errors: errors.array() });
             return;
         }
-        res.render('lobby', { title: 'Game Lobby' , username: username});
+        res.redirect('/lobby');
     }
 ];

@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/landing');
 var users = require('./routes/users');
+var lobby = require('./routes/lobby');
 
 var app = express();
 
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/',routes);
 app.use('/users', users);
+app.use('/lobby', lobby);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -60,10 +62,6 @@ app.use(function (err, req, res, next) {
 
 app.set('port', process.env.PORT || 3000);
 
-/*var server = app.listen(app.get('port'), function () {
-    debug('Express server listening on port ' + server.address().port);
-});*/
-
 const http = require('http')
 const server = http.createServer(app)
 
@@ -74,5 +72,11 @@ const io = socketio(server)
 server.listen(app.get('port'), () => debug('Express server listening on port ' + server.address().port));
 
 io.on('connection', socket => {
-    console.log('New web socket connection');
+    io.emit('chat message', 'User joined the lobby');
+    socket.on('chat message', msg => {
+        io.emit('chat message', msg);
+    });
+    socket.on('disconnect', msg => {
+        io.emit('chat message', 'User left the lobby');
+    });
 });
