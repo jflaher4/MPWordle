@@ -16,6 +16,8 @@ exports.username_get = function (req, res, next) {
     res.render('landing', { title: 'Multiplayer WorNDle', randomUserName: getRandomUserName() });
 }
 
+const querystring = require('query-string');
+
 exports.username_post = [
 
     // Validate and sanitize the name field.
@@ -35,6 +37,8 @@ exports.username_post = [
             res.render('landing', { title: 'Multiplayer WorNDle', randomUserName: getRandomUserName() , errors: errors.array() });
             return;
         }
-        res.redirect('/lobby');
+
+        const qs = querystring.stringify({ 'uname': username });
+        res.redirect('/lobby?' + qs );
     }
 ];

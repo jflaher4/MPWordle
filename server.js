@@ -72,7 +72,6 @@ const io = socketio(server)
 server.listen(app.get('port'), () => debug('Express server listening on port ' + server.address().port));
 
 io.on('connection', socket => {
-    io.emit('chat message', 'User joined the lobby');
     socket.on('chat message', msg => {
         io.emit('chat message', msg);
     });

@@ -3,6 +3,9 @@ extends layout
 block content  
     .flex-container
         .flex-child.magenta
+            p 
+                | Hi 
+                span#username #{username}
             a(href='https://jflaher4.github.io/wordle/') Play single player version    
         .flex-child.green
             ul#messages
