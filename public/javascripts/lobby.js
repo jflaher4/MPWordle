@@ -37,4 +37,9 @@ socket.on('player list', function (playerList) {
         player.textContent = x.username;
         players.appendChild(player);
     });
+    if (playerList.length == 1) {
+        var player = document.createElement('li');
+        player.textContent = 'Waiting for other players ...';
+        players.appendChild(player);
+    }
 });
