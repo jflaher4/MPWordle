@@ -71,7 +71,19 @@ const io = socketio(server)
 
 server.listen(app.get('port'), () => debug('Express server listening on port ' + server.address().port));
 
+var playerList = [];
+
 io.on('connection', socket => {
+
+    socket.on('join', (username) => {
+        playerList.push({
+            'username': username, 'ready': 0, 'playerID': 1 + Math.max(playerList.map(player => {
+                return player.playerID;
+            }))
+        });
+        console.log(playerList);
+    });
+
     socket.on('chat message', msg => {
         io.emit('chat message', msg);
     });
@@ -79,3 +91,4 @@ io.on('connection', socket => {
         io.emit('chat message', username + ' left the lobby');
     });
 });
+

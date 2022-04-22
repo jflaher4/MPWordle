@@ -6,7 +6,9 @@ var form = document.getElementById('form');
 var input = document.getElementById('input');
 var username = document.getElementById('username').textContent
 
+socket.emit('join', username);
 socket.emit('chat message', username + ' has entered the chat.');
+
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
