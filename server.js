@@ -81,7 +81,7 @@ io.on('connection', socket => {
                 return player.playerID;
             }))
         });
-        console.log(playerList);
+        io.emit('player list', playerList);
     });
 
     socket.on('chat message', msg => {
@@ -91,4 +91,3 @@ io.on('connection', socket => {
         io.emit('chat message', username + ' left the lobby');
     });
 });
-

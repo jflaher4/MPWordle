@@ -2,6 +2,7 @@
 var socket = io();
 
 var messages = document.getElementById('messages');
+var players = document.getElementById('players')
 var form = document.getElementById('form');
 var input = document.getElementById('input');
 var username = document.getElementById('username').textContent
@@ -23,4 +24,17 @@ socket.on('chat message', function (msg) {
     item.textContent = msg;
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+});
+
+socket.on('player list', function (playerList) {
+    var child = players.lastElementChild;
+    while (child) {
+        players.removeChild(child);
+        child = players.lastElementChild;
+    }
+    playerList.forEach((x, i) => {
+        var player = document.createElement('li');
+        player.textContent = x.username;
+        players.appendChild(player);
+    });
 });
