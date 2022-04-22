@@ -6,6 +6,7 @@ var players = document.getElementById('players')
 var form = document.getElementById('form');
 var input = document.getElementById('input');
 var username = document.getElementById('username').textContent
+var button = document.getElementById('ready');
 
 socket.emit('join', username);
 socket.emit('chat message', username + ' has entered the chat.');
@@ -18,6 +19,12 @@ form.addEventListener('submit', function (e) {
         input.value = '';
     }
 });
+
+
+// Not complete YET
+button.addEventListener("click", function (ready) {
+    io.emit('ready up', username);
+})
 
 socket.on('chat message', function (msg) {
     var item = document.createElement('li');

@@ -84,6 +84,18 @@ io.on('connection', socket => {
         io.emit('player list', playerList);
     });
 
+
+    // handle ready button press    (NOT COMPLETE YET)
+    socket.on('ready up', (username) => {
+        playerList.forEach((x, i) => {
+            if (x.username == username) {
+                x.ready = 1;
+            }
+        })
+        console.log("hi");
+        console.log(playerList);
+    });
+
     socket.on('chat message', msg => {
         io.emit('chat message', msg);
     });
