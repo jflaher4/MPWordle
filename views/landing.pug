@@ -1,16 +1,18 @@
 extends layout
  
 block content
-  p Welcome to #{title}
-  form(action='' method='POST')
-      label(for='username') Username:
+  #landing_body
+    p#welcome_message
+      span#welcome_to Welcome To
       br
-      input#lname(type='text' name='username' value= randomUserName)
+      span#mpwordle #{title}
+    form#landing_form(action='' method='POST')
+      label#username_label(for='username') Username
+      input#username_input(type='text' name='username' value= randomUserName)
       br
-      br
-      input(type='submit' value='Enter Game Lobby')
+      input#username_submit(type='submit' value='Enter Game Lobby')
 
-  if errors
-   ul
-    for error in errors
-     li!= error.msg
+    if errors
+      ul#errors
+        for error in errors
+          li!= error.msg

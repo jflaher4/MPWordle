@@ -14,11 +14,87 @@ h2 {
     margin-top: 0px; 
 }
 
+ul {
+    list-style-type: none;
+}
+
 .header {
     color: black;
     width: 100%;
     text-align: center;
     border-bottom: black solid 1px;
+}
+
+#landing_body {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#welcome_message {
+    text-align: center;
+    font-size: 26px;
+}
+
+#welcome_to {
+    font-family: Brush Script MT, Brush Script Std, cursive;
+}
+
+#mpwordle {
+    font-family: Arial;
+    font-variant-caps: small-caps;
+}
+
+#landing_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#username_label {
+    font-family: Arial;
+    font-variant-caps: small-caps;
+    font-size: 18px;
+}
+
+#username_input {
+    text-align: center;
+    font-family: Brush Script MT, Brush Script Std, cursive;
+    font-size: 24px;
+    height: 40px;
+    width: 240px;
+    border-color: black;
+    border-radius: 4px;
+    border-width: 1px;
+}
+
+#username_submit {
+    font-family: Arial;
+    font-variant-caps: small-caps;
+    font-size: 18px;
+    height: 30px;
+    border-color: black;
+    background-color: white;
+    border-radius: 4px;
+    border-width: 1px;
+}
+
+#username_submit:hover {
+    background-color: green;
+    color: white;
+    border-color: white;
+    
+}
+
+#errors {
+    color: red;
+    padding-left: 0px;
+    text-align: center;
+    font-family: Arial;
+    font-variant-caps: small-caps;
 }
 
 .flex-container {
@@ -31,5 +107,5 @@ h2 {
 }
 
 .flex-child:first-child {
-    margin-right: 20px;
-} 
+        margin-right: 20px;
+    }
