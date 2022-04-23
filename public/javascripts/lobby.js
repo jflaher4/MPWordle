@@ -46,24 +46,38 @@ socket.on('player list', function (playerList) {
         players.appendChild(message);
     } else if (playerList.length > 1) {
         all_ready = true;
+        var playerId = 0;
         playerList.forEach((x, i) => {
             if (x.ready == 0) {
                 all_ready = false;
             }
+            if (x.username == username) {
+                playerId = x.playerID;
+            }
         });
         if (all_ready) {
-            var message = document.createElement('li');
-            message.textContent = 'Game starting ...';
-            players.appendChild(message);
 
             var enter_form = document.createElement("form");
             enter_form.setAttribute("method", "POST");
             enter_form.setAttribute("action", "");
 
+            var input_uname = document.createElement("input");
+            input_uname.setAttribute("type", "hidden");
+            input_uname.setAttribute("name", "uname");
+            input_uname.setAttribute("value", username);
+
+            var input_id = document.createElement("input");
+            input_id.setAttribute("type", "hidden");
+            input_id.setAttribute("name", "playerId");
+            input_id.setAttribute("value", playerId);
+
             var s = document.createElement("input");
             s.setAttribute("type", "submit");
             s.setAttribute("value", "ENTER GAME");
 
+            //append to form element that you want .
+            enter_form.appendChild(input_uname)
+            enter_form.appendChild(input_id)
             enter_form.appendChild(s);
             document.getElementsByClassName("left")[0].appendChild(enter_form);
         }

@@ -95,7 +95,7 @@ io.on('connection', socket => {
         io.emit('chat message', msg);
     });
     socket.on('disconnect', msg => {
-        io.emit('chat message', username + ' has left the lobby');
+        io.emit('chat message', 'User has left the lobby');
     });
 
 });

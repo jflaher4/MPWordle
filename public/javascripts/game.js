@@ -1,1 +1,1 @@
-var socket = game();
+var socket = io();
