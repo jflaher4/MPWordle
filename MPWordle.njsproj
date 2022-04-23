@@ -29,6 +29,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="controllers\game_controller.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="controllers\lobby_controller.js">
       <SubType>Code</SubType>
     </Content>
@@ -38,6 +41,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="public\javascripts\lobby.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="routes\game.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="routes\lobby.js">
@@ -52,6 +58,9 @@
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
+    <Content Include="views\game.pug">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\lobby.pug">
       <SubType>Code</SubType>
     </Content>

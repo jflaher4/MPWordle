@@ -1,16 +1,14 @@
-
 var socket = io();
 
 var messages = document.getElementById('messages');
 var players = document.getElementById('players')
-var form = document.getElementById('form');
+var form = document.getElementById('chat_form');
 var input = document.getElementById('input');
 var username = document.getElementById('username').textContent
-var button = document.getElementById('ready');
+var ready_button = document.getElementById('ready');
 
-socket.emit('join', username);
+socket.emit('joined lobby', username);
 socket.emit('chat message', username + ' has entered the chat.');
-
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -20,11 +18,9 @@ form.addEventListener('submit', function (e) {
     }
 });
 
-
-// Not complete YET
-button.addEventListener("click", function (ready) {
-    io.emit('ready up', username);
-})
+ready_button.addEventListener('click', function (e) {
+    socket.emit('ready up', username);
+});
 
 socket.on('chat message', function (msg) {
     var item = document.createElement('li');
@@ -41,12 +37,35 @@ socket.on('player list', function (playerList) {
     }
     playerList.forEach((x, i) => {
         var player = document.createElement('li');
-        player.textContent = x.username;
+        player.textContent = x.username + ' ' + x.ready;
         players.appendChild(player);
     });
     if (playerList.length == 1) {
-        var player = document.createElement('li');
-        player.textContent = 'Waiting for other players ...';
-        players.appendChild(player);
+        var message = document.createElement('li');
+        message.textContent = 'Waiting for other players ...';
+        players.appendChild(message);
+    } else if (playerList.length > 1) {
+        all_ready = true;
+        playerList.forEach((x, i) => {
+            if (x.ready == 0) {
+                all_ready = false;
+            }
+        });
+        if (all_ready) {
+            var message = document.createElement('li');
+            message.textContent = 'Game starting ...';
+            players.appendChild(message);
+
+            var enter_form = document.createElement("form");
+            enter_form.setAttribute("method", "POST");
+            enter_form.setAttribute("action", "");
+
+            var s = document.createElement("input");
+            s.setAttribute("type", "submit");
+            s.setAttribute("value", "ENTER GAME");
+
+            enter_form.appendChild(s);
+            document.getElementsByClassName("left")[0].appendChild(enter_form);
+        }
     }
 });

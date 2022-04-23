@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/landing');
 var users = require('./routes/users');
 var lobby = require('./routes/lobby');
+var game = require('./routes/game');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/',routes);
 app.use('/users', users);
 app.use('/lobby', lobby);
+app.use('/game', game);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -72,10 +74,8 @@ const io = socketio(server)
 server.listen(app.get('port'), () => debug('Express server listening on port ' + server.address().port));
 
 var playerList = [];
-
 io.on('connection', socket => {
-
-    socket.on('join', (username) => {
+    socket.on('joined lobby', (username) => {
         playerList.push({
             'username': username, 'ready': 0, 'playerID': 1 + Math.max(playerList.map(player => {
                 return player.playerID;
@@ -83,23 +83,19 @@ io.on('connection', socket => {
         });
         io.emit('player list', playerList);
     });
-
-
-    // handle ready button press    (NOT COMPLETE YET)
     socket.on('ready up', (username) => {
         playerList.forEach((x, i) => {
             if (x.username == username) {
                 x.ready = 1;
             }
         })
-        console.log("hi");
-        console.log(playerList);
+        io.emit('player list', playerList)
     });
-
     socket.on('chat message', msg => {
         io.emit('chat message', msg);
     });
     socket.on('disconnect', msg => {
-        io.emit('chat message', username + ' left the lobby');
+        io.emit('chat message', username + ' has left the lobby');
     });
+
 });
