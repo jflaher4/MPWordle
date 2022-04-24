@@ -8,7 +8,7 @@ block content
       span#mpwordle #{title}
     form#landing_form(action='' method='POST')
       label#username_label(for='username') Username
-      input#username_input(type='text' name='username' value= randomUserName)
+      input#username_input(autocomplete='off' type='text' name='username' value= randomUserName)
       br
       input#username_submit(type='submit' value='Enter Game Lobby')
 

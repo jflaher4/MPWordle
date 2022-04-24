@@ -3,15 +3,24 @@ extends layout
 block content  
     .flex-container
         .flex-child.left
-            p 
-                | Hi 
-                span#username #{username}
-                button#ready(type='button') Ready
-            a(href='https://jflaher4.github.io/wordle/') Play single player version 
+            #intro
+                #welcome_username
+                    | Welcome
+                    span#username #{username}
+                    | !
+                br
+                button#ready.ready(type='button') Ready Up
+                br
+                span#or or
+                br          
+                a#single_player(href='https://jflaher4.github.io/wordle/') Play the Single Player Version 
+                br
+            h2 Competitors
             ul#players
         .flex-child.right
-            ul#messages
+            #chat_box
+                ul#messages
             form#chat_form(action='')
                 input#input(autocomplete='off')
-                button Send
+                button#send_chat Send
     script(src='/javascripts/lobby.js')

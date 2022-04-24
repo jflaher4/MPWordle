@@ -26,7 +26,8 @@ socket.on('chat message', function (msg) {
     var item = document.createElement('li');
     item.textContent = msg;
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    var elem = document.getElementById('chat_box');
+    elem.scrollTop = elem.scrollHeight;
 });
 
 socket.on('player list', function (playerList) {
@@ -72,8 +73,9 @@ socket.on('player list', function (playerList) {
             input_id.setAttribute("value", playerId);
 
             var s = document.createElement("input");
+            s.setAttribute("class","ready")
             s.setAttribute("type", "submit");
-            s.setAttribute("value", "ENTER GAME");
+            s.setAttribute("value", "Enter Game");
 
             //append to form element that you want .
             enter_form.appendChild(input_uname)
