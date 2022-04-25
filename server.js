@@ -114,6 +114,10 @@ io.on('connection', socket => {
     socket.on('start game', msg => {
         io.emit('start game', getRandomWord());
     });
+    socket.on('check guess', msg => {
+        console.log(msg);
+        socket.emit('check guess', checkWord(msg));
+    });
 });
 
 function getRandomWord() {
@@ -125,12 +129,13 @@ function getRandomWord() {
 
 }
 
-function checkWord() {
-    words.map(function (word) {
+function checkWord(userGuess) {
+    const words = fs.readFileSync('data/five-letter-words.txt', 'utf-8').split(/\r?\n/)
+    return words.map(function (word) {
         if (word.charAt(0) === "*") {
             return word.substring(1);
         } else {
             return word;
         }
-    });
-}
+    }).includes(userGuess);
+} 

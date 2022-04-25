@@ -19,6 +19,12 @@ eventListen();
 
 socket.emit('start game');
 
+let correctString = ''
+
+socket.on('start game', function (randomWord) {
+	correctString = randomWord;
+});
+
 function eventListen() {
 	
 	// Need to use onkeydown instead of keypress to handle backspaces and deletes
@@ -95,7 +101,6 @@ function createString(pos) {
 	return userGuess;
 }
 
-
 function keyPressedStyle(keyIndex) {
 	let key = document.getElementsByClassName("key")[keyIndex]
 	// Manually create a key pressed animation using setTimeout
@@ -108,54 +113,60 @@ function keyPressedStyle(keyIndex) {
 }
 
 function enterGuess(userGuess) {
-	let included = wordListPromise.then(data => data.includes(userGuess));
-	included.then(data => {
-		if (data && pos > minPos) {
-			randomWordPromise.then(correctString => {
-				let numCorrectLetters = 0;
-				for (let i = pos - 5; i < pos; i++) {
-					let square = document.getElementsByClassName("letter")[i];
-					let key = document.getElementsByClassName("key")[keyboard.indexOf(square.textContent) + 28];
-					if (correctString.charAt((i - 20) % 5) == square.textContent) {   // correct postion
-						square.style.backgroundColor = "green";   // Change colors to green
-						square.style.color = color2;
-						square.style.borderColor = color2;
-						numCorrectLetters++;
-						key.style.backgroundColor = "green";
-						key.style.color = color2;
-						key.style.borderColor = color2;
-					} else if (correctString.indexOf(square.textContent) >= 0) {   // in word, incorrect position
-						square.style.backgroundColor = "gold";   // Change colors to gold
-						square.style.color = color2;
-						square.style.borderColor = color2;
-						if (key.style.backgroundColor !== "green") { // Sets color priority
-							key.style.backgroundColor = "gold";
-						}
-						key.style.color = color2;
-						key.style.borderColor = color2;
-					} else {
-						square.style.backgroundColor = "gray";   // Change colors to gray
-						square.style.color = color2;
-						square.style.borderColor = color2;
-						key.style.backgroundColor = "gray";
-						key.style.color = color2;
-						key.style.borderColor = color2;
-					}
-				}
-				if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
-					winStyle((pos - 20) / 5);
-					gameWon = true;
-				} else if (pos === 50) {
-					loseStyle();
-					gameWon = true;
-				}
-			});
-			// Updates the typing boundaries
-			minPos += 5;
-			maxPos += 5;
-		} else {
-			invalidWordStyle(pos);
-		}
+	let included = false;
+	socket.emit('check guess', userGuess);
+	socket.on('check guess', msg => {
+		included = msg;
+		parseGuess(included)
 	});
+}
+
+function parseGuess(included) {
+	if (included && pos > minPos) {
+		let numCorrectLetters = 0;
+		for (let i = pos - 5; i < pos; i++) {
+			let square = document.getElementsByClassName("letter")[i];
+			let key = document.getElementsByClassName("key")[keyboard.indexOf(square.textContent) + 28];
+			if (correctString.charAt(i % 5) == square.textContent) {   // correct postion
+				square.style.backgroundColor = "green";   // Change colors to green
+				square.style.color = color2;
+				square.style.borderColor = color2;
+				numCorrectLetters++;
+				key.style.backgroundColor = "green";
+				key.style.color = color2;
+				key.style.borderColor = color2;
+			} else if (correctString.indexOf(square.textContent) >= 0) {   // in word, incorrect position
+				square.style.backgroundColor = "gold";   // Change colors to gold
+				square.style.color = color2;
+				square.style.borderColor = color2;
+				if (key.style.backgroundColor !== "green") { // Sets color priority
+					key.style.backgroundColor = "gold";
+				}
+				key.style.color = color2;
+				key.style.borderColor = color2;
+			} else {
+				square.style.backgroundColor = "gray";   // Change colors to gray
+				square.style.color = color2;
+				square.style.borderColor = color2;
+				key.style.backgroundColor = "gray";
+				key.style.color = color2;
+				key.style.borderColor = color2;
+			}
+		}
+		if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
+			winStyle((pos) / 5);
+			gameWon = true;
+		} else if (pos === 50) {
+			loseStyle();
+			gameWon = true;
+		}
+
+		// Updates the typing boundaries
+		minPos += 5;
+		maxPos += 5;
+	} else {
+		console.log("invalid word")
+		//invalidWordStyle(pos);
+	}
 }
 
