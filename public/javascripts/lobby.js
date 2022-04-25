@@ -86,5 +86,3 @@ socket.on('player list', function (playerList) {
         }
     }
 });
-
-socket.emit('disconnect',username)

@@ -25,6 +25,16 @@ socket.on('start game', function (randomWord) {
 	correctString = randomWord;
 });
 
+let opponentPos = 30;
+socket.on('opponent guess', function (colors) {
+	console.log(colors);
+	for (let i = opponentPos; i < opponentPos + 5; i++) {
+		let square = document.getElementsByClassName("letter")[i];
+		square.style.backgroundColor = colors[i - opponentPos];
+		square.style.borderColor = color2;
+	}
+});
+
 function eventListen() {
 	
 	// Need to use onkeydown instead of keypress to handle backspaces and deletes
@@ -124,11 +134,13 @@ function enterGuess(userGuess) {
 function parseGuess(included) {
 	if (included && pos > minPos) {
 		let numCorrectLetters = 0;
+		let colors = ["gray", "gray", "gray", "gray", "gray"];
 		for (let i = pos - 5; i < pos; i++) {
 			let square = document.getElementsByClassName("letter")[i];
 			let key = document.getElementsByClassName("key")[keyboard.indexOf(square.textContent)];
 			if (correctString.charAt(i % 5) == square.textContent) {   // correct postion
-				square.style.backgroundColor = "green";   // Change colors to green
+				colors[i % 5] = "green";
+ 				square.style.backgroundColor = "green";   // Change colors to green
 				square.style.color = color2;
 				square.style.borderColor = color2;
 				numCorrectLetters++;
@@ -136,6 +148,7 @@ function parseGuess(included) {
 				key.style.color = color2;
 				key.style.borderColor = color2;
 			} else if (correctString.indexOf(square.textContent) >= 0) {   // in word, incorrect position
+				colors[i % 5] = "gold";
 				square.style.backgroundColor = "gold";   // Change colors to gold
 				square.style.color = color2;
 				square.style.borderColor = color2;
@@ -153,6 +166,9 @@ function parseGuess(included) {
 				key.style.borderColor = color2;
 			}
 		}
+
+		socket.emit('opponent guess', colors);
+		
 		if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
 			//winStyle((pos) / 5);       
 			gameWon = true;
@@ -179,26 +195,9 @@ function invalidWordStyle(pos) {
 	for(let i = pos - 5; i < pos; i++) {
 		squares[i].style.borderWidth = "2px"
 	}
-	/*
-	let i = 1;
-	if (pos === 20) {
-		i = 0;
-	}
-	*/
-	let messageBox = document.getElementsByClassName("alert")[i];
-	messageBox.style.backgroundColor = "red";
-	messageBox.style.opacity = "1";
-	messageBox.textContent = "INVALID WORD";
-	messageBox.style.color = color2;
-	messageBox.style.fontWeight = "bold";
-	messageBox.style.fontSize = "24px";
-	messageBox.style.zIndex = "3";
 	setTimeout(function() {
 		for(let i = pos - 5; i < pos; i++) {
 			squares[i].style.borderWidth = "1px"
 		}
 	},100);
-	setTimeout(function() {
-		messageBox.style.opacity = "0";
-	},1000);
 }

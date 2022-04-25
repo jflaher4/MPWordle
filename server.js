@@ -118,6 +118,10 @@ io.on('connection', socket => {
         console.log(msg);
         socket.emit('check guess', checkWord(msg));
     });
+
+    socket.on('opponent guess', (colors) => {
+        socket.broadcast.emit('opponent guess', colors);
+    });
 });
 
 function getRandomWord() {
