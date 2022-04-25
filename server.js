@@ -63,7 +63,7 @@ app.use(function (err, req, res, next) {
     });
 });
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 51001);
 
 const http = require('http')
 const server = http.createServer(app)
@@ -75,6 +75,7 @@ const io = socketio(server)
 server.listen(app.get('port'), () => debug('Express server listening on port ' + server.address().port));
 
 var playerList = [];
+var gamePlayerList = [];
 io.on('connection', socket => {
     socket.on('joined lobby', (username) => {
         let playerInList = false;
@@ -111,13 +112,19 @@ io.on('connection', socket => {
         });
         io.emit('chat message', disconnectedUser + ' has left the lobby');
     });
-    socket.on('start game', msg => {
+    socket.on('start game', username => {
+        gamePlayerList.push({ 'username': username, 'playerId': socket.id });
+        if (gamePlayerList.length > 1) {
+            socket.emit('opponent username', gamePlayerList[0].username);
+            socket.broadcast.emit('opponent username', username);
+            io.emit('ready to start');
+        }
+        io.emit('game chat message', username + ' joined the game.')
         io.emit('start game', getRandomWord());
     });
     socket.on('check guess', msg => {
         socket.emit('check guess', checkWord(msg));
     });
-
     socket.on('opponent guess', (colors) => {
         socket.broadcast.emit('opponent guess', colors);
     });

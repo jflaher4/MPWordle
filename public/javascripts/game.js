@@ -5,7 +5,7 @@ var socket = io();
 let pos = 0;
 let minPos = pos;     // Tracks how far back the user can delete
 let maxPos = pos + 5; // Tracks how far the user can type
-let gameWon = false;   // Allows the player to play until they've won
+let gameWon = true;   // Allows the player to play until they've won
 // Starting colors
 let color1 = "black";
 let color2 = "white";
@@ -18,7 +18,7 @@ const keyboard = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D
 // Most important function call => listens for clicks and key presses
 eventListen();
 
-socket.emit('start game');
+socket.emit('start game',username);
 
 let correctString = ''
 
@@ -43,6 +43,15 @@ socket.on('game chat message', function (msg) {
 	messages.appendChild(item);
 	var elem = document.getElementById('game_chat_box');
 	elem.scrollTop = elem.scrollHeight;
+});
+
+socket.on('ready to start', msg => {
+	gameWon = false;
+});
+
+socket.on('opponent username', msg => {
+	opponentUsername = msg;
+	document.getElementById('opponent_name').textContent = opponentUsername;
 });
 
 function eventListen() {
