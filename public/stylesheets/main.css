@@ -246,3 +246,50 @@ a:active {
 .flex-child:first-child {
     margin-right: 20px;
 }
+
+.letterboard {
+    margin: 15px;
+}
+
+.letter {
+    color: white;
+    margin: 4px;
+    padding: 10px 5px;
+    font-size: 32px;
+    font-weight: bold;
+    min-height: 37px;
+    min-width: 42px;
+    text-align: center;
+    border: 1px solid black;
+    cursor: default;
+}
+
+.row {
+    display: flex;
+    min-height: 60px;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 475px;
+}
+
+.key {
+    color: black;
+    border: 1px solid black;
+    font-size: 24px;
+    padding: 10px 5px;
+    border-radius: 5px;
+    margin: 4px;
+    text-align: center;
+    min-width: 37px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.key:hover {
+    font-weight: bold !important;
+    border: 2px solid !important;
+}

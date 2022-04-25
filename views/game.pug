@@ -1,5 +1,124 @@
 extends layout 
 
 block content 
-    p Welcome
-     script(src='/javascripts/game.js')
+    script(src='/javascripts/game.js')
+
+    .flex-container
+        .game-flex-child.left
+            .letterboard
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+            .keyboard
+                .row
+                    button.key Q
+                    button.key W
+                    button.key E
+                    button.key R
+                    button.key T
+                    button.key Y
+                    button.key U
+                    button.key I
+                    button.key O
+                    button.key P
+                .row
+                    button.key A
+                    button.key S
+                    button.key D
+                    button.key F
+                    button.key G
+                    button.key H
+                    button.key J
+                    button.key K
+                    button.key L
+                .row
+                    button.key Submit
+                    button.key Z
+                    button.key X
+                    button.key C
+                    button.key V
+                    button.key B
+                    button.key N
+                    button.key M
+                    button.key Del
+
+        .game-flex-child.chat
+            #chat_box
+                ul#messages
+            form#chat_form(action='')
+                input#input(autocomplete='off')
+                button#send_chat Send
+
+        .game-flex-child.opponent
+            .letterboard
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                .row
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+                    .letter
+
+        
