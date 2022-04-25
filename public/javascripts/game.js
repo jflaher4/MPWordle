@@ -17,6 +17,8 @@ const keyboard = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D
 // Most important function call => listens for clicks and key presses
 eventListen();
 
+
+
 socket.emit('start game');
 
 let correctString = ''
@@ -36,16 +38,25 @@ socket.on('opponent guess', function (colors) {
 	opponentPos += 5;
 });
 
+var messages = document.getElementById('game_messages');
+socket.on('game chat message', function (msg) {
+	var item = document.createElement('li');
+	item.textContent = msg;
+	messages.appendChild(item);
+	var elem = document.getElementById('game_chat_box');
+	elem.scrollTop = elem.scrollHeight;
+});
+
 function eventListen() {
 	
 	// Need to use onkeydown instead of keypress to handle backspaces and deletes
-	document.onkeydown = function (e) {
-		if (e.keyCode == 82 && e.ctrlKey) { // Doesn't print R in a box on Ctrl+R
+	document.addEventListener('keydown', function (e) {
+		if ((e.keyCode == 82 && e.ctrlKey) || e.target === document.getElementById('game_input')) { // Doesn't print R in a box on Ctrl+R
 			//pass
 		} else {
 			keyPressed(e.keyCode);
 		}
-	};
+	});
 	// Loops through keyboard buttons
 	for (let i = 0; i < keyboard.length; i++) {
 		// Listen for click
@@ -53,6 +64,15 @@ function eventListen() {
 			keyClicked(i);
 		});
 	}
+	var form = document.getElementById('game_chat_form');
+	var input = document.getElementById('game_input');
+	form.addEventListener('submit', function (e) {
+		e.preventDefault();
+		if (input.value) {
+			socket.emit('game chat message', username + ": " + input.value);
+			input.value = '';
+		}
+	});
 }
 
 function keyClicked(i) {

@@ -121,6 +121,10 @@ io.on('connection', socket => {
     socket.on('opponent guess', (colors) => {
         socket.broadcast.emit('opponent guess', colors);
     });
+    socket.on('game chat message', msg => {
+        console.log(msg);
+        io.emit('game chat message', msg);
+    });
 });
 
 function getRandomWord() {
