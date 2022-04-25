@@ -9,6 +9,7 @@ let gameWon = false;   // Allows the player to play until they've won
 // Starting colors
 let color1 = "black";
 let color2 = "white";
+var username = document.getElementById('username').textContent
 // Stores keyboard in list so we can index it and get the letters
 const keyboard = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D",
 	"F", "G", "H", "J", "K", "L", "Submit", "Z", "X", "C", "V", "B",
@@ -16,8 +17,6 @@ const keyboard = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D
 
 // Most important function call => listens for clicks and key presses
 eventListen();
-
-
 
 socket.emit('start game');
 

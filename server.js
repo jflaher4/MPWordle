@@ -122,7 +122,6 @@ io.on('connection', socket => {
         socket.broadcast.emit('opponent guess', colors);
     });
     socket.on('game chat message', msg => {
-        console.log(msg);
         io.emit('game chat message', msg);
     });
 });
