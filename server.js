@@ -76,21 +76,18 @@ server.listen(app.get('port'), () => debug('Express server listening on port ' +
 
 var playerList = [];
 io.on('connection', socket => {
-    console.log("User joined");
     socket.on('joined lobby', (username) => {
-        /*playerInList = false;
+        let playerInList = false;
         playerList.forEach((x, i) => {
-            if (x.username == username) {
+            if (x.playerID == socket.id) {
                 playerInList = true;
             }
-        });*/
-        //if (!playerInList) {
-        playerList.push({
-            'username': username, 'ready': 0, 'playerID': 1 + Math.max(playerList.map(player => {
-                return player.playerID;
-            }))
         });
-        //}
+        if (!playerInList) {
+            playerList.push({
+                'username': username, 'ready': 0, 'playerID': socket.id
+            });
+        }
         io.emit('player list', playerList);
     });
     socket.on('ready up', (username) => {
@@ -98,14 +95,21 @@ io.on('connection', socket => {
             if (x.username == username) {
                 x.ready = 1;
             }
-        })
+        });
         io.emit('player list', playerList)
     });
     socket.on('chat message', msg => {
         io.emit('chat message', msg);
     });
     socket.on('disconnect', msg => {
-        io.emit('chat message', 'User has left the lobby');
+        let disconnectedUser = socket.id
+        playerList.forEach((x, i) => {
+            if (x.playerID == socket.id) {
+                disconnectedUser = x.username
+                playerList.splice(i, 1);
+            }
+        });
+        io.emit('chat message', disconnectedUser + ' has left the lobby');
     });
     socket.on('start game', msg => {
         io.emit('start game', getRandomWord());
