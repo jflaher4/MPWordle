@@ -38,11 +38,11 @@ function eventListen() {
 }
 
 function keyClicked(i) {
-	if (i !== 47 && i !== 55) {   // 47 is submit and 55 is delete
+	if (i !== 19 && i !== 27) {   // 19 is submit and 27 is delete
 		addToBoard(keyboard[i]);
-	} else if (i === 55 && pos > 0) {
+	} else if (i === 27 && pos > 0) {
 		deleteFromBoard();
-	} else if (i === 47 && (pos % 5 == 0) && (pos > minPos)) {  // ">20" makes sure pos is not at initial square
+	} else if (i === 19 && (pos % 5 == 0) && (pos > minPos)) {  
 		enterGuess(createString(pos));
 	}
 }
@@ -61,6 +61,7 @@ function deleteFromBoard() {
 		pos--;
 	}
 	let square = document.getElementsByClassName("letter")[pos];
+	console.log(square)
 	square.textContent = "";
 	square.style.color = color2;
 }
