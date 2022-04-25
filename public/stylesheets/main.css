@@ -248,6 +248,7 @@ a:active {
 }
 
 .letterboard {
+    font-family: Arial;
     margin: 15px;
 }
 

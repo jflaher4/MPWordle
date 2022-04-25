@@ -126,7 +126,7 @@ function parseGuess(included) {
 		let numCorrectLetters = 0;
 		for (let i = pos - 5; i < pos; i++) {
 			let square = document.getElementsByClassName("letter")[i];
-			let key = document.getElementsByClassName("key")[keyboard.indexOf(square.textContent) + 28];
+			let key = document.getElementsByClassName("key")[keyboard.indexOf(square.textContent)];
 			if (correctString.charAt(i % 5) == square.textContent) {   // correct postion
 				square.style.backgroundColor = "green";   // Change colors to green
 				square.style.color = color2;
@@ -154,10 +154,10 @@ function parseGuess(included) {
 			}
 		}
 		if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
-			winStyle((pos) / 5);
+			//winStyle((pos) / 5);       
 			gameWon = true;
-		} else if (pos === 50) {
-			loseStyle();
+		} else if (pos === 30) {
+			//loseStyle();
 			gameWon = true;
 		}
 
@@ -170,3 +170,35 @@ function parseGuess(included) {
 	}
 }
 
+function invalidWordStyle(pos) {
+
+	// Function not complete without pug changes
+
+	// Display the message box when a player inputs an invalid word
+	let squares = document.getElementsByClassName("letter");
+	for(let i = pos - 5; i < pos; i++) {
+		squares[i].style.borderWidth = "2px"
+	}
+	/*
+	let i = 1;
+	if (pos === 20) {
+		i = 0;
+	}
+	*/
+	let messageBox = document.getElementsByClassName("alert")[i];
+	messageBox.style.backgroundColor = "red";
+	messageBox.style.opacity = "1";
+	messageBox.textContent = "INVALID WORD";
+	messageBox.style.color = color2;
+	messageBox.style.fontWeight = "bold";
+	messageBox.style.fontSize = "24px";
+	messageBox.style.zIndex = "3";
+	setTimeout(function() {
+		for(let i = pos - 5; i < pos; i++) {
+			squares[i].style.borderWidth = "1px"
+		}
+	},100);
+	setTimeout(function() {
+		messageBox.style.opacity = "0";
+	},1000);
+}
