@@ -33,6 +33,7 @@ socket.on('opponent guess', function (colors) {
 		square.style.backgroundColor = colors[i - opponentPos];
 		square.style.borderColor = color2;
 	}
+	opponentPos += 5;
 });
 
 function eventListen() {

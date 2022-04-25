@@ -115,7 +115,6 @@ io.on('connection', socket => {
         io.emit('start game', getRandomWord());
     });
     socket.on('check guess', msg => {
-        console.log(msg);
         socket.emit('check guess', checkWord(msg));
     });
 
@@ -128,7 +127,6 @@ function getRandomWord() {
     
     const words = fs.readFileSync('data/five-letter-words.txt', 'utf-8').split(/\r?\n/).filter(x => x.charAt(0) === "*").map(x => x.substring(1));
     const randomWord = words[Math.floor(Math.random() * words.length)];
-    console.log(randomWord);
     return randomWord;
 
 }
