@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const fs = require('fs');
 
 var routes = require('./routes/landing');
 var users = require('./routes/users');
@@ -75,6 +76,7 @@ server.listen(app.get('port'), () => debug('Express server listening on port ' +
 
 var playerList = [];
 io.on('connection', socket => {
+    console.log("User joined");
     socket.on('joined lobby', (username) => {
         /*playerInList = false;
         playerList.forEach((x, i) => {
@@ -105,5 +107,26 @@ io.on('connection', socket => {
     socket.on('disconnect', msg => {
         io.emit('chat message', 'User has left the lobby');
     });
-
+    socket.on('start game', msg => {
+        io.emit('start game', getRandomWord());
+    });
 });
+
+function getRandomWord() {
+    
+    const words = fs.readFileSync('data/five-letter-words.txt', 'utf-8').split(/\r?\n/).filter(x => x.charAt(0) === "*").map(x => x.substring(1));
+    const randomWord = words[Math.floor(Math.random() * words.length)];
+    console.log(randomWord);
+    return randomWord;
+
+}
+
+function checkWord() {
+    words.map(function (word) {
+        if (word.charAt(0) === "*") {
+            return word.substring(1);
+        } else {
+            return word;
+        }
+    });
+}

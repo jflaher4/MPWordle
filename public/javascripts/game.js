@@ -17,6 +17,8 @@ const keyboard = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D
 // Most important function call => listens for clicks and key presses
 eventListen();
 
+socket.emit('start game');
+
 function eventListen() {
 	
 	// Need to use onkeydown instead of keypress to handle backspaces and deletes
@@ -34,7 +36,6 @@ function eventListen() {
 			keyClicked(i);
 		});
 	}
-
 }
 
 function keyClicked(i) {
@@ -105,7 +106,6 @@ function keyPressedStyle(keyIndex) {
 		key.style.borderWidth = "1px";
 	}, 50);
 }
-
 
 function enterGuess(userGuess) {
 	let included = wordListPromise.then(data => data.includes(userGuess));
