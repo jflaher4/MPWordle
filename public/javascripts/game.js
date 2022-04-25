@@ -47,6 +47,27 @@ function keyClicked(i) {
 	}
 }
 
+function keyPressed(key) {
+	// Handles key events based on what key was pressed
+	if ((97 <= key && key <= 122) || (65 <= key && key <= 90)) { //a to z or A to Z
+
+		let letter = String.fromCharCode(key).toUpperCase();
+		let keyIndex = keyboard.findIndex((x) => x === letter);
+		addToBoard(letter);
+		keyPressedStyle(keyIndex);
+
+	} else if (key === 13) { //Enter
+		keyPressedStyle(19);
+		if ((pos % 5 == 0) && (pos > minPos) && !gameWon) {
+			enterGuess(createString(pos));
+		}
+
+	} else if (key === 8 || key === 46) { //Delete or Backspace
+		keyPressedStyle(27);
+		deleteFromBoard();
+	}
+}
+
 function addToBoard(letter) {
 	if (pos < maxPos && !gameWon) {
 		let square = document.getElementsByClassName("letter")[pos];
@@ -61,11 +82,80 @@ function deleteFromBoard() {
 		pos--;
 	}
 	let square = document.getElementsByClassName("letter")[pos];
-	console.log(square)
 	square.textContent = "";
 	square.style.color = color2;
 }
 
-function enterGuess(userGuess) {
-	return;
+function createString(pos) {
+	let userGuess = "";
+	for (let i = pos - 5; i < pos; i++) {
+		userGuess += document.getElementsByClassName("letter")[i].textContent;
+	}
+	return userGuess;
 }
+
+
+function keyPressedStyle(keyIndex) {
+	let key = document.getElementsByClassName("key")[keyIndex]
+	// Manually create a key pressed animation using setTimeout
+	key.style.fontWeight = "bold";
+	key.style.borderWidth = "2px"
+	setTimeout(function () {
+		key.style.fontWeight = "normal";
+		key.style.borderWidth = "1px";
+	}, 50);
+}
+
+
+function enterGuess(userGuess) {
+	let included = wordListPromise.then(data => data.includes(userGuess));
+	included.then(data => {
+		if (data && pos > minPos) {
+			randomWordPromise.then(correctString => {
+				let numCorrectLetters = 0;
+				for (let i = pos - 5; i < pos; i++) {
+					let square = document.getElementsByClassName("letter")[i];
+					let key = document.getElementsByClassName("key")[keyboard.indexOf(square.textContent) + 28];
+					if (correctString.charAt((i - 20) % 5) == square.textContent) {   // correct postion
+						square.style.backgroundColor = "green";   // Change colors to green
+						square.style.color = color2;
+						square.style.borderColor = color2;
+						numCorrectLetters++;
+						key.style.backgroundColor = "green";
+						key.style.color = color2;
+						key.style.borderColor = color2;
+					} else if (correctString.indexOf(square.textContent) >= 0) {   // in word, incorrect position
+						square.style.backgroundColor = "gold";   // Change colors to gold
+						square.style.color = color2;
+						square.style.borderColor = color2;
+						if (key.style.backgroundColor !== "green") { // Sets color priority
+							key.style.backgroundColor = "gold";
+						}
+						key.style.color = color2;
+						key.style.borderColor = color2;
+					} else {
+						square.style.backgroundColor = "gray";   // Change colors to gray
+						square.style.color = color2;
+						square.style.borderColor = color2;
+						key.style.backgroundColor = "gray";
+						key.style.color = color2;
+						key.style.borderColor = color2;
+					}
+				}
+				if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
+					winStyle((pos - 20) / 5);
+					gameWon = true;
+				} else if (pos === 50) {
+					loseStyle();
+					gameWon = true;
+				}
+			});
+			// Updates the typing boundaries
+			minPos += 5;
+			maxPos += 5;
+		} else {
+			invalidWordStyle(pos);
+		}
+	});
+}
+

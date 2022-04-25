@@ -37,6 +37,7 @@
     </Content>
     <Content Include="data\animals.txt" />
     <Content Include="data\english-adjectives.txt" />
+    <Content Include="data\five-letter-words.txt" />
     <Content Include="public\javascripts\game.js">
       <SubType>Code</SubType>
     </Content>
