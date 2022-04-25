@@ -28,7 +28,6 @@ socket.on('start game', function (randomWord) {
 
 let opponentPos = 30;
 socket.on('opponent guess', function (colors) {
-	console.log(colors);
 	for (let i = opponentPos; i < opponentPos + 5; i++) {
 		let square = document.getElementsByClassName("letter")[i];
 		square.style.backgroundColor = colors[i - opponentPos];
@@ -192,9 +191,11 @@ function parseGuess(included) {
 		if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
 			//winStyle((pos) / 5);       
 			gameWon = true;
+			socket.emit('game chat message', username + ' has won the game!');
 		} else if (pos === 30) {
 			//loseStyle();
 			gameWon = true;
+			socket.emit('game chat message', username + ' has used all of their guesses!');
 		}
 
 		// Updates the typing boundaries
