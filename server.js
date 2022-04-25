@@ -76,11 +76,19 @@ server.listen(app.get('port'), () => debug('Express server listening on port ' +
 var playerList = [];
 io.on('connection', socket => {
     socket.on('joined lobby', (username) => {
+        /*playerInList = false;
+        playerList.forEach((x, i) => {
+            if (x.username == username) {
+                playerInList = true;
+            }
+        });*/
+        //if (!playerInList) {
         playerList.push({
             'username': username, 'ready': 0, 'playerID': 1 + Math.max(playerList.map(player => {
                 return player.playerID;
             }))
         });
+        //}
         io.emit('player list', playerList);
     });
     socket.on('ready up', (username) => {

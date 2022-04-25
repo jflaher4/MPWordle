@@ -56,11 +56,12 @@ socket.on('player list', function (playerList) {
                 playerId = x.playerID;
             }
         });
-        if (all_ready) {
+        if (all_ready && document.getElementById("enter_form") == null) {
 
             var enter_form = document.createElement("form");
             enter_form.setAttribute("method", "POST");
             enter_form.setAttribute("action", "");
+            enter_form.setAttribute("id", "enter_form");
 
             var input_uname = document.createElement("input");
             input_uname.setAttribute("type", "hidden");
