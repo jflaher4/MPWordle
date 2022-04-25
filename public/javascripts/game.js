@@ -18,7 +18,7 @@ const keyboard = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D
 eventListen();
 
 function eventListen() {
-
+	
 	// Need to use onkeydown instead of keypress to handle backspaces and deletes
 	document.onkeydown = function (e) {
 		if (e.keyCode == 82 && e.ctrlKey) { // Doesn't print R in a box on Ctrl+R
@@ -28,7 +28,7 @@ function eventListen() {
 		}
 	};
 	// Loops through keyboard buttons
-	for (let i = 0; i < 2 * keyboard.length; i++) {
+	for (let i = 0; i < keyboard.length; i++) {
 		// Listen for click
 		document.getElementsByClassName("key")[i].addEventListener("click", function () {
 			keyClicked(i);
@@ -39,7 +39,7 @@ function eventListen() {
 
 function keyClicked(i) {
 	if (i !== 47 && i !== 55) {   // 47 is submit and 55 is delete
-		addToBoard(keyboard[i - 28]);
+		addToBoard(keyboard[i]);
 	} else if (i === 55 && pos > 0) {
 		deleteFromBoard();
 	} else if (i === 47 && (pos % 5 == 0) && (pos > minPos)) {  // ">20" makes sure pos is not at initial square
