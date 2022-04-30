@@ -38,7 +38,13 @@ socket.on('player list', function (playerList) {
     }
     playerList.forEach((x, i) => {
         var player = document.createElement('li');
-        player.textContent = x.username + ' ' + x.ready;
+        var readyMsg;
+        if (x.ready == 1) {
+            readyMsg = 'READY!';
+        } else {
+            readyMsg = 'Waiting...';
+        }
+        player.textContent = x.username + ' | ' + readyMsg;
         players.appendChild(player);
     });
     if (playerList.length == 1) {
