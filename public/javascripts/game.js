@@ -54,6 +54,10 @@ socket.on('opponent username', msg => {
 	document.getElementById('opponent_name').textContent = opponentUsername;
 });
 
+socket.on('game over', msg => {
+	gameWon = msg;
+});
+
 function eventListen() {
 	
 	// Need to use onkeydown instead of keypress to handle backspaces and deletes
@@ -200,11 +204,12 @@ function parseGuess(included) {
 		if (numCorrectLetters == 5) {     // If all 5 letters are green, player wins
 			//winStyle((pos) / 5);       
 			gameWon = true;
+			socket.emit('game over', gameWon);
 			socket.emit('game chat message', username + ' has won the game!');
 		} else if (pos === 30) {
 			//loseStyle();
 			gameWon = true;
-			socket.emit('game chat message', username + ' has used all of their guesses!');
+			socket.emit('game chat message', username + ' has used all of their guesses!');	
 		}
 
 		// Updates the typing boundaries

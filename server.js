@@ -131,6 +131,9 @@ io.on('connection', socket => {
     socket.on('game chat message', msg => {
         io.emit('game chat message', msg);
     });
+    socket.on('game over', msg => {
+        io.emit('game over', msg);
+    });
 });
 
 function getRandomWord() {
