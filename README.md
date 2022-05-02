@@ -14,9 +14,9 @@ Final Project for Programming Paradigms Spring 2022
 - Once both players have entered the game, players may begin guessing what the word is (both players have the same goal word they are trying to guess). 
 - Once a player guesses a valid word, their guess will change colors according to the correctness of their guess 
 
-- Green = right letter, right location
-- Yellow = right letter, wrong location
-- Gray = letter not in word
+  - Green = right letter, right location
+  - Yellow = right letter, wrong location
+  - Gray = letter not in word
 
 - The player will be able to see the color of their opponent's guesses, but not the letters of the guess.
 - The first player to correctly guess the word wins the game and there will be a game won message in the chat. 
